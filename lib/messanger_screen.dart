@@ -76,7 +76,7 @@ class MessangerScreen extends StatelessWidget {
                           child: const Icon(Icons.add),
                         ),
                         const SizedBox(height: 12),
-                        Text('Your Story'),
+                        Text('My Storysssssssssssssss'),
                       ], //Stack
                     ),
                     const SizedBox(width: 12),
