@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/todo/archived_tasks.dart';
 import 'package:flutter_application_1/todo/cubit/todo_states.dart';
@@ -75,4 +76,10 @@ class TodoCubit extends Cubit<TodoStates> {
     isBottomSheetOpen = isShow;
     emit(AppChangeButtomSheetState());
   }
+
+  void getData()async{
+    Response response = await Dio().get('https://rickandmortyapi.com/api/character/344');
+    print(response.data['name']); 
+  }
+
 }

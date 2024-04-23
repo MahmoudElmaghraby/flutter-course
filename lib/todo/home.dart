@@ -18,6 +18,7 @@ class HomeScreen extends StatelessWidget {
             key: scaffoldKey,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
+                TodoCubit.get(context).getData();
                 if (TodoCubit.get(context).isBottomSheetOpen) {
                   TodoCubit.get(context).insertToDatabase(titleController.text);
                   Navigator.pop(context); 
