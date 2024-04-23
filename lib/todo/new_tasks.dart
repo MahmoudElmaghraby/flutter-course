@@ -55,17 +55,19 @@ class NewTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TodoCubit, TodoStates>(builder: (context, state) {
       print('the list items equal ${TodoCubit.get(context).list?.length}');
+      var tasks = TodoCubit.get(context).list;
       return ListView.builder(
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'task title index $index',
+              '${tasks?[index]['title']}',
+             // 'task title index $index',
               style: const TextStyle(fontSize: 30),
             ),
           );
         },
-        itemCount: 4,
+        itemCount: tasks?.length,
       );
     });
   }

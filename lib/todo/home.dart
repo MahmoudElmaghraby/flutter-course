@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 if (TodoCubit.get(context).isBottomSheetOpen) {
                   TodoCubit.get(context).insertToDatabase(titleController.text);
-                  Navigator.pop(context);
+                  Navigator.pop(context); 
                   TodoCubit.get(context).isBottomSheetOpen = false;
                 } else {
                   TodoCubit.get(context).isBottomSheetOpen = true;
@@ -39,7 +39,10 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     );
+                  }).closed.then((value) {
+                    TodoCubit.get(context).changeBottomSheet(isShow: false);
                   });
+                   TodoCubit.get(context).changeBottomSheet(isShow: true);
                 }
               },
               child: Icon(TodoCubit.get(context).isBottomSheetOpen
