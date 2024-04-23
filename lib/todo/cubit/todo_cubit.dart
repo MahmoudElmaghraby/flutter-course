@@ -45,7 +45,7 @@ class TodoCubit extends Cubit<TodoStates> {
     });
   }
 
-  void insertToDatabase(String title) async {
+  insertToDatabase(String title) async {
     await database?.transaction((txn) async {
       txn
           .rawInsert('INSERT INTO tasks(title, status) VALUES("$title", "New")')
@@ -62,15 +62,18 @@ class TodoCubit extends Cubit<TodoStates> {
 
   Future<List<Map<String, Object?>>?> getFromDatabase(db) async {
     return await db?.rawQuery('SELECT * FROM tasks');
-  }
+    Future<List<Map<String, Object?>>?> getFromDatabase(db) async {
+      return await db?.rawQuery('SELECT * FROM tasks');
+    }
 
-  void changeIndex(currentIndex) {
-    this.currentIndex = currentIndex;
-    emit(TodoChangeIndexState());
-  }
+    void changeIndex(currentIndex) {
+      this.currentIndex = currentIndex;
+      emit(TodoChangeIndexState());
+    }
 
-  void changeButtonSheetIcon(bool isShown) {
-    isBottomSheetOpen = isShown;
-    emit(TodoChangeButtomSheetState());
+    void changeButtonSheetIcon(bool isShown) {
+      isBottomSheetOpen = isShown;
+      emit(TodoChangeButtomSheetState());
+    }
   }
 }
