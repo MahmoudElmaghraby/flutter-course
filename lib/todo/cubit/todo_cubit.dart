@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/todo/archived_tasks.dart';
 import 'package:flutter_application_1/todo/cubit/todo_states.dart';
@@ -20,13 +19,12 @@ class TodoCubit extends Cubit<TodoStates> {
     DoneTasks(),
     ArchivedTasks(),
   ];
-
   bool isBottomSheetOpen = false;
   Database? database;
-
   List<Map<String, Object?>>? list;
-  Future<void> createDataBase() async {
-    database = await openDatabase(
+
+  void createDataBase() {
+    openDatabase(
       'todo.db',
       version: 1,
       onCreate: (db, version) {
@@ -36,9 +34,15 @@ class TodoCubit extends Cubit<TodoStates> {
       },
       onOpen: (db) {
         print('database opend');
-        getFromDatabase(db);
+        getFromDatabase(db).then((value) {
+          list = value;
+          emit(TodoGetDatabaseState());
+        });
       },
-    );
+    ).then((value) {
+      database = value;
+      emit(TodoCreateDatabaseState());
+    });
   }
 
   void insertToDatabase(String title) async {
@@ -47,16 +51,26 @@ class TodoCubit extends Cubit<TodoStates> {
           .rawInsert('INSERT INTO tasks(title, status) VALUES("$title", "New")')
           .then((value) {
         print('row inserted with id $value');
+        emit(TodoInsertDatabaseState());
+        getFromDatabase(database).then((value) {
+          list = value;
+          emit(TodoGetDatabaseState());
+        });
       });
     });
   }
 
-  void getFromDatabase(db) async {
-    list = await db?.rawQuery('SELECT * FROM tasks');
+  Future<List<Map<String, Object?>>?> getFromDatabase(db) async {
+    return await db?.rawQuery('SELECT * FROM tasks');
   }
 
   void changeIndex(currentIndex) {
     this.currentIndex = currentIndex;
     emit(TodoChangeIndexState());
+  }
+
+  void changeButtonSheetIcon(bool isShown) {
+    isBottomSheetOpen = isShown;
+    emit(TodoChangeButtomSheetState());
   }
 }

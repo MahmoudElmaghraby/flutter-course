@@ -19,27 +19,33 @@ class HomeScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 if (TodoCubit.get(context).isBottomSheetOpen) {
-                  TodoCubit.get(context).insertToDatabase(titleController.text);
                   Navigator.pop(context);
-                  TodoCubit.get(context).isBottomSheetOpen = false;
+                  TodoCubit.get(context).changeButtonSheetIcon(false);
                 } else {
-                  TodoCubit.get(context).isBottomSheetOpen = true;
-                  scaffoldKey.currentState?.showBottomSheet((context) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      width: double.infinity,
-                      height: 200,
-                      child: Center(
-                        child: TextFormField(
-                          controller: titleController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter task title',
+                  TodoCubit.get(context).changeButtonSheetIcon(true);
+                  scaffoldKey.currentState
+                      ?.showBottomSheet((context) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          width: double.infinity,
+                          height: 200,
+                          child: Center(
+                            child: TextFormField(
+                              controller: titleController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Enter task title',
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  });
+                        );
+                      })
+                      .closed
+                      .then((value) {
+                        TodoCubit.get(context)
+                            .insertToDatabase(titleController.text);
+                        TodoCubit.get(context).changeButtonSheetIcon(false);
+                      });
                 }
               },
               child: Icon(TodoCubit.get(context).isBottomSheetOpen

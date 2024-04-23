@@ -54,18 +54,25 @@ class NewTasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoCubit, TodoStates>(builder: (context, state) {
-      print('the list items equal ${TodoCubit.get(context).list?.length}');
+      var taskList = TodoCubit.get(context).list;
       return ListView.builder(
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'task title index $index',
-              style: const TextStyle(fontSize: 30),
+            child: Row(
+              children: [
+                Text(
+                  '${taskList?[index]['title']}',
+                  style: const TextStyle(fontSize: 30),
+                ),
+                Spacer(),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.done)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.archive)),
+              ],
             ),
           );
         },
-        itemCount: 4,
+        itemCount: taskList?.length,
       );
     });
   }
