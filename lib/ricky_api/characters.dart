@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ricky_api/cubit/cubit/ricky_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CharactersScreen extends StatelessWidget {
-  const CharactersScreen({super.key});
+  CharactersScreen({super.key});
+
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,14 @@ class CharactersScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Characters'),
+              actions: [
+                TextButton(
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                    },
+                    child: const Text('Log out')),
+              ],
+              title: Text('Hellow ${user.email}'),
               centerTitle: true,
               elevation: 10,
               backgroundColor: Colors.white,
@@ -86,7 +96,7 @@ class CharactersScreen extends StatelessWidget {
                       height: 16,
                     );
                   },
-                  itemCount: 100
+                  itemCount: 20
                   //RickyCubit.get(context).myData?.data['results'].length
                   ),
             ),

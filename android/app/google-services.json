@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474495937105",
+    "project_id": "ricky-auth",
+    "storage_bucket": "ricky-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474495937105:android:5119447cc2771049786670",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6l4CIgOGc0Tj7m9ryuEgCnR5cEe3u0Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
